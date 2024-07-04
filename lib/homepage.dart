@@ -29,13 +29,25 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  void _cancel() {
+    _weightController.clear();
+    _heightController.clear();
+    setState(() {
+      _bmi = 0;
+      _bmiResult = "";
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('BMI Calculator'),
+        backgroundColor: Colors.blueAccent,
+        titleTextStyle: TextStyle(color: Colors.white),
       ),
-      body: Padding(
+      body: Container(
+        color: Colors.lightBlue[50],
         padding: const EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
@@ -49,6 +61,7 @@ class _HomePageState extends State<HomePage> {
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
+                  color: Colors.blueAccent,
                 ),
               ),
               SizedBox(height: 20),
@@ -59,6 +72,8 @@ class _HomePageState extends State<HomePage> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
                   ),
+                  filled: true,
+                  fillColor: Colors.white,
                 ),
                 keyboardType: TextInputType.number,
                 validator: (value) {
@@ -76,6 +91,8 @@ class _HomePageState extends State<HomePage> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
                   ),
+                  filled: true,
+                  fillColor: Colors.white,
                 ),
                 keyboardType: TextInputType.number,
                 validator: (value) {
@@ -86,16 +103,37 @@ class _HomePageState extends State<HomePage> {
                 },
               ),
               SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: _calculateBMI,
-                style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
-                  textStyle: TextStyle(fontSize: 18),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  OutlinedButton(
+                    onPressed: _cancel,
+                    style: OutlinedButton.styleFrom(
+                      padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                      textStyle: TextStyle(fontSize: 18),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      side: BorderSide(color: Colors.blueAccent, width: 2.0),
+                    ),
+                    child: Text(
+                      'Cancel',
+                      style: TextStyle(color: Colors.blueAccent),
+                    ),
                   ),
-                ),
-                child: Text('Calculate BMI'),
+                  ElevatedButton(
+                    onPressed: _calculateBMI,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blueAccent,
+                      padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                      textStyle: TextStyle(fontSize: 18),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                    ),
+                    child: Text('Calculate BMI', style: TextStyle(color: Colors.white)),
+                  ),
+                ],
               ),
               SizedBox(height: 20),
               Text(
